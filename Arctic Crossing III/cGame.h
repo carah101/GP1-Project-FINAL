@@ -56,6 +56,7 @@ private:
 	bool onIce;
 	bool soundPlayed = false;
 	int Score = 0;
+	string theScore;
 	// Fonts to use
 	vector<LPCSTR> fontList;
 	vector<LPCSTR> fontsToUse;

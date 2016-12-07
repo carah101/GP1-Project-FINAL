@@ -59,7 +59,7 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 	// Store the button textures
 	btnNameList = { "exit_btn", "instructions_btn", "load_btn", "menu_btn", "play_btn", "save_btn", };
 	btnTexturesToUse = { "Images/Buttons/button_exit.png", "Images/Buttons/button_instructions.png", "Images/Buttons/button_load.png", "Images/Buttons/button_menu.png", "Images/Buttons/button_play.png", "Images/Buttons/button_save.png", };
-	btnPos = { { 400, 250 }, { 400, 200 }, { 400, 200 }, { 400, 500 }, { 400, 300 }, { 740, 500 } };
+	btnPos = { { 400, 250 }, { 400, 200 }, { 400, 200 }, { 400, 500 }, { 425, 300 }, { 740, 500 } };
 	for (int bCount = 0; bCount < btnNameList.size(); bCount++)
 	{
 		theTextureMgr->addTexture(btnNameList[bCount], btnTexturesToUse[bCount]);
@@ -82,8 +82,8 @@ void cGame::initialise(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		theFontMgr->addFont(fontList[fonts], fontsToUse[fonts], 48);
 	}
 	// Create text Textures
-	gameTextNames = { "TitleTxt", "ThanksTxt", "ScoreTxt"};
-	gameTextList = { "Arctic Crossing", "Thanks for playing!", "Score: 0" };
+	gameTextNames = { "TitleTxt", "ThanksTxt", "ScoreTxt", "100", "200", "300", "400" };
+	gameTextList = { "Arctic Crossing", "Thanks for playing!", "Score:", "100", "200", "300", "400" };
 	for (int text = 0; text < gameTextNames.size(); text++)
 	{
 		theTextureMgr->addTexture(gameTextNames[text], theFontMgr->getFont("ice")->createTextTexture(theRenderer, gameTextList[text], SOLID , { 255, 255, 255, 255 }, { 0, 0, 0, 0 }));
@@ -163,7 +163,7 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		title.render(theRenderer, &title.getSpriteDimensions(), &title.getSpritePos(), title.getSpriteRotAngle(), &title.getSpriteCentre(), title.getSpriteScale());
 		// Render Button
 		theButtonMgr->getBtn("play_btn")->render(theRenderer, &theButtonMgr->getBtn("play_btn")->getSpriteDimensions(), &theButtonMgr->getBtn("play_btn")->getSpritePos(), theButtonMgr->getBtn("play_btn")->getSpriteScale());
-		theButtonMgr->getBtn("exit_btn")->setSpritePos({ 400, 375 });
+		theButtonMgr->getBtn("exit_btn")->setSpritePos({ 425, 375 });
 		theButtonMgr->getBtn("exit_btn")->render(theRenderer, &theButtonMgr->getBtn("exit_btn")->getSpriteDimensions(), &theButtonMgr->getBtn("exit_btn")->getSpritePos(), theButtonMgr->getBtn("exit_btn")->getSpriteScale());
 			}
 	break;
@@ -175,13 +175,36 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		tempTextTexture = theTextureMgr->getTexture("TitleTxt");
 		pos = { 10, 10, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
 		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
-		//render the score
-	
 		
+		
+		//render the score
 		tempTextTexture = theTextureMgr->getTexture("ScoreTxt");
 		pos = { 10, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
 		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
-	
+		
+		switch (Score)
+		{
+		case 100:
+			tempTextTexture = theTextureMgr->getTexture("100");
+			pos = { 150, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+			tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+			break;
+		case 200:
+			tempTextTexture = theTextureMgr->getTexture("200");
+			pos = { 150, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+			tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+			break;
+		case 300:
+			tempTextTexture = theTextureMgr->getTexture("300");
+			pos = { 150, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+			tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+			break;
+		case 400:
+			tempTextTexture = theTextureMgr->getTexture("400");
+			pos = { 150, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+			tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+			break;
+		}
 
 
 		//render the scor
@@ -191,17 +214,32 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		IceC.render(theRenderer, &IceC.getSpriteDimensions(), &IceC.getSpritePos(), IceC.getSpriteRotAngle(), &IceC.getSpriteCentre(), IceC.getSpriteScale());
 
 		// render the seal & fish
-		Fish1.render(theRenderer, &Fish1.getSpriteDimensions(), &Fish1.getSpritePos(), Fish1.getSpriteRotAngle(), &Fish1.getSpriteCentre(), Fish1.getSpriteScale());
-		Fish2.render(theRenderer, &Fish2.getSpriteDimensions(), &Fish2.getSpritePos(), Fish2.getSpriteRotAngle(), &Fish2.getSpriteCentre(), Fish2.getSpriteScale());
-		Fish3.render(theRenderer, &Fish3.getSpriteDimensions(), &Fish3.getSpritePos(), Fish3.getSpriteRotAngle(), &Fish3.getSpriteCentre(), Fish3.getSpriteScale());
-		Fish4.render(theRenderer, &Fish4.getSpriteDimensions(), &Fish4.getSpritePos(), Fish4.getSpriteRotAngle(), &Fish4.getSpriteCentre(), Fish4.getSpriteScale());
+		if (Fish1.isActive())
+		{
+			Fish1.render(theRenderer, &Fish1.getSpriteDimensions(), &Fish1.getSpritePos(), Fish1.getSpriteRotAngle(), &Fish1.getSpriteCentre(), Fish1.getSpriteScale());
+		}
+		if (Fish2.isActive())
+		{
+			Fish2.render(theRenderer, &Fish2.getSpriteDimensions(), &Fish2.getSpritePos(), Fish2.getSpriteRotAngle(), &Fish2.getSpriteCentre(), Fish2.getSpriteScale());
+		}
+		if (Fish3.isActive())
+		{
+			Fish3.render(theRenderer, &Fish3.getSpriteDimensions(), &Fish3.getSpritePos(), Fish3.getSpriteRotAngle(), &Fish3.getSpriteCentre(), Fish3.getSpriteScale());
+		}
+		if (Fish4.isActive())
+		{
+			Fish4.render(theRenderer, &Fish4.getSpriteDimensions(), &Fish4.getSpritePos(), Fish4.getSpriteRotAngle(), &Fish4.getSpriteCentre(), Fish4.getSpriteScale());
+		}
 		theSeal.render(theRenderer, &theSeal.getSpriteDimensions(), &theSeal.getSpritePos(), theSeal.getSpriteRotAngle(), &theSeal.getSpriteCentre(), theSeal.getSpriteScale());
 		
 	}
 	break;
 	case END:
 	{
+		//render background
 		spriteBkgd.render(theRenderer, NULL, NULL, spriteBkgd.getSpriteScale());
+
+		//render text
 		tempTextTexture = theTextureMgr->getTexture("TitleTxt");
 		pos = { 10, 10, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
 		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
@@ -209,6 +247,34 @@ void cGame::render(SDL_Window* theSDLWND, SDL_Renderer* theRenderer)
 		pos = { 300, 10, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
 		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
 
+		//render the score
+		tempTextTexture = theTextureMgr->getTexture("ScoreTxt");
+		pos = { 10, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+		tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+		switch (Score)
+		{
+		case 100:
+			tempTextTexture = theTextureMgr->getTexture("100");
+			pos = { 150, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+			tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+			break;
+		case 200:
+			tempTextTexture = theTextureMgr->getTexture("200");
+			pos = { 150, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+			tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+			break;
+		case 300:
+			tempTextTexture = theTextureMgr->getTexture("300");
+			pos = { 150, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+			tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+			break;
+		case 400:
+			tempTextTexture = theTextureMgr->getTexture("400");
+			pos = { 150, 50, tempTextTexture->getTextureRect().w, tempTextTexture->getTextureRect().h };
+			tempTextTexture->renderTexture(theRenderer, tempTextTexture->getTexture(), &tempTextTexture->getTextureRect(), &pos, scale);
+			break;
+		}
+		//render buttons
 		theButtonMgr->getBtn("menu_btn")->setSpritePos({ 400, 500 });
 		theButtonMgr->getBtn("menu_btn")->render(theRenderer, &theButtonMgr->getBtn("menu_btn")->getSpriteDimensions(), &theButtonMgr->getBtn("menu_btn")->getSpritePos(), theButtonMgr->getBtn("menu_btn")->getSpriteScale());
 		theButtonMgr->getBtn("exit_btn")->setSpritePos({ 400, 575 });
@@ -290,33 +356,45 @@ void cGame::update(double deltaTime)
 
 
 			//check for collisions with pickups
-			if (theSeal.collidedWith(&(theSeal.getBoundingRect()), &(Fish1.getBoundingRect())))
+			if (Fish1.isActive())
 			{
-				Fish1.setActive(false);
-				Score += 100;
-				cout << Score << "\n";
-				theSoundMgr->getSnd("pickup")->play(-1);
+				if (theSeal.collidedWith(&(theSeal.getBoundingRect()), &(Fish1.getBoundingRect())))
+				{
+					Fish1.setActive(false);
+					Score += 100;
+					cout << Score << "\n";
+					theSoundMgr->getSnd("pickup")->play(0);
+				}
 			}
-			if (theSeal.collidedWith(&(theSeal.getBoundingRect()), &(Fish2.getBoundingRect())))
+			if (Fish2.isActive())
 			{
-				Fish2.setActive(false);
-				Score += 100;
-				cout << Score << "\n";
-				theSoundMgr->getSnd("pickup")->play(-1);
+				if (theSeal.collidedWith(&(theSeal.getBoundingRect()), &(Fish2.getBoundingRect())))
+				{
+					Fish2.setActive(false);
+					Score += 100;
+					cout << Score << "\n";
+					theSoundMgr->getSnd("pickup")->play(0);
+				}
 			}
-			if (theSeal.collidedWith(&(theSeal.getBoundingRect()), &(Fish3.getBoundingRect())))
+			if (Fish3.isActive())
 			{
-				Fish3.setActive(false);
-				Score += 100;
-				cout << Score << "\n";
-				theSoundMgr->getSnd("pickup")->play(-1);
+				if (theSeal.collidedWith(&(theSeal.getBoundingRect()), &(Fish3.getBoundingRect())))
+				{
+					Fish3.setActive(false);
+					Score += 100;
+					cout << Score << "\n";
+					theSoundMgr->getSnd("pickup")->play(0);
+				}
 			}
-			if (theSeal.collidedWith(&(theSeal.getBoundingRect()), &(Fish4.getBoundingRect())))
+			if (Fish4.isActive())
 			{
-				Fish4.setActive(false);
-				Score += 100;
-				cout << Score << "\n";
-				theSoundMgr->getSnd("pickup")->play(-1);
+				if (theSeal.collidedWith(&(theSeal.getBoundingRect()), &(Fish4.getBoundingRect())))
+				{
+					Fish4.setActive(false);
+					Score += 100;
+					cout << Score << "\n";
+					theSoundMgr->getSnd("pickup")->play(0);
+				}
 			}
 			//undate the fish
 			Fish1.update(deltaTime);
@@ -329,7 +407,7 @@ void cGame::update(double deltaTime)
 			{
 					if (iceBounce)
 					{
-						theSeal.setSealMotion({ 0, -130 }); //update seal position
+						theSeal.setSealMotion({ 0, -100 }); //update seal position
 					}
 					else
 					{
@@ -337,12 +415,11 @@ void cGame::update(double deltaTime)
 					}
 					onIce = true;
 			}
-
 			else if (theSeal.collidedWith(&(theSeal.getBoundingRect()), &(IceB.getBoundingRect())))
 			{
 					if (!iceBounce)
 					{
-						theSeal.setSealMotion({ 0, -130 });  //update seal position
+						theSeal.setSealMotion({ 0, -100 });  //update seal position
 					}
 					else
 					{
@@ -364,38 +441,22 @@ void cGame::update(double deltaTime)
 				}	
 			}
 			//update the score
-			switch (Score)
-			{
-			case 100:
-				{
-					gameTextList[2] = { "Score: 100" }; break;
-				}
-			case 200:
-				{
-					gameTextList[2] = { "Score: 200" }; break;
-				}
-			case 300:
-				{
-					gameTextList[2] = { "Score: 300" }; break;
-				}
-			case 400:
-				{
-					gameTextList[2] = { "Score: 400" }; break;
-				}
-			
-			}
 
 
 
 			if (Score == 400)
 			{
-				//theGameState = END;
+				theGameState = END;
 			}
 		}
 		break;
 		case END:
 		{
-			theSoundMgr->getSnd("end")->play(0); //play game over sound
+			if (Score < 400)
+			{
+				theSoundMgr->getSnd("end")->play(0); //play game over sound
+			}
+
 			theGameState = theButtonMgr->getBtn("exit_btn")->update(theGameState, QUIT, theAreaClicked);
 			theGameState = theButtonMgr->getBtn("menu_btn")->update(theGameState, MENU, theAreaClicked);
 		}
